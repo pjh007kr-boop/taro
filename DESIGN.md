@@ -1,48 +1,48 @@
 # TARO Design Guide
 
+> Updated from the attached “명지대학교 타로 디자인 팩.fig” on 2026-11-19. The pack was inspected through its `thumbnail.png`, `meta.json`, and 22 extracted `images/*` assets. Its `canvas.fig` is a compressed Figma binary and its editable layer/style metadata could not be decoded in this environment. Values below distinguish sampled colors from visual observations; exact typography, spacing, component names, and component variants still need confirmation from the source file.
+
 ## 1. Design direction
 
-TARO is a quiet, friendly tarot reading that feels personal without feeling predictive or invasive. Keep the experience light, calm, and mobile-first: one clear action at a time, generous whitespace, a single card as the visual focus, and concise Korean copy. Use the supplied gallery reference for its restraint, clear type hierarchy, flat surfaces, and deliberate use of one accent color; translate those principles into a warm mystical mood rather than reproducing Apple's product styling.
+TARO follows the attached university tarot pack: a clean white and pale-gray canvas, near-black typography, vivid green actions, and the traditional illustrated tarot deck as the main visual. Keep the experience mobile-first, with one clear action at a time, generous whitespace, and concise Korean copy. Apply the pack’s bright, straightforward interface to the existing privacy-first tarot flow. The reference thumbnail shows form, result, sharing, and card collection patterns; the exact source component properties could not be read from the packed canvas binary.
 
 - **Theme:** light only for MVP
-- **Personality:** reflective, warm, contemporary, trustworthy
+- **Personality:** direct, bright, approachable, trustworthy
 - **Primary visual:** one illustrated Major Arcana card, centered and given room to breathe
-- **Avoid:** occult fear cues, prediction certainty, dense dashboards, excessive gradients, glow, glitter, heavy shadows, and decorative UI that competes with the card
+- **Avoid:** occult fear cues, prediction certainty, dense dashboards, gradients, glow, glitter, heavy shadows, and decoration that competes with the card
 - **Privacy is visible:** place the short privacy promise beside the form and on the result screen; never make it a hidden legal footnote
 - **Entertainment notice:** show “오락용 타로 해석입니다” on the result card, saved image, and share text
 
 ## 2. Color tokens
 
-Use semantic tokens in components. The palette keeps the reference's clean white gallery and restrained accent behavior, while adding a deep violet identity and a muted gold card detail. Accent colors should guide actions and card illustration details, not fill every surface.
+Use semantic tokens in components. The pack’s interface palette is white, pale gray, ink, and vivid green. Keep saturated green for key actions and selected states so it remains distinctive.
 
 | Role | Hex | CSS token | Use |
 |---|---|---|---|
-| Gallery | `#FFFFFF` | `--color-gallery` | Main canvas and card face |
-| Mist | `#F7F6FA` | `--color-mist` | Alternate section and page backdrop |
-| Paper | `#FCFBFE` | `--color-paper` | Subtle inset surface |
-| Ink | `#231F2B` | `--color-ink` | Headlines and primary copy |
-| Muted ink | `#716B79` | `--color-muted` | Supporting copy and labels |
-| Violet | `#5B45B5` | `--color-violet` | Primary action, selected topic, text links |
-| Violet hover | `#493593` | `--color-violet-hover` | Hover and pressed primary action |
-| Lavender | `#F0ECFA` | `--color-lavender` | Selected topic background and quiet callouts |
-| Antique gold | `#A87920` | `--color-gold` | Small card accents, emblem, and decorative rules only |
-| Line | `#E5E1EB` | `--color-line` | Input borders, separators, card outline |
-| Control gray | `#F0EFF3` | `--color-control` | Disabled and low-emphasis controls |
-| Error | `#B42332` | `--color-error` | Invalid date and form errors |
-| Success | `#287A53` | `--color-success` | Save confirmation when a visual status is needed |
+| White | `#FFFFFF` | `--color-white` | Main canvas and card face; sampled from pack thumbnail |
+| Pale gray | `#F3F3F5` | `--color-canvas` | Main screen background; sampled from pack thumbnail |
+| Soft gray | `#F9F9FA` | `--color-surface-muted` | Quiet inset surfaces; sampled from pack thumbnail |
+| Border gray | `#D2D2D3` | `--color-border` | Control borders and dividers; sampled from pack thumbnail |
+| Mid gray | `#BFBFBF` | `--color-disabled` | Disabled controls and low emphasis; sampled from pack thumbnail |
+| Ink | `#232427` | `--color-ink` | Main text; sampled from pack thumbnail |
+| Primary green | `#00D959` | `--color-primary` | Main action and selected state; sampled from pack thumbnail |
+| Pale green | `#E6FAEF` | `--color-green-soft` | Selected/quiet green surface; sampled from pack thumbnail |
+| Mint | `#80ECAC` | `--color-green-mid` | Secondary green accent; sampled from pack thumbnail |
+| Light mint | `#F2FCF7` | `--color-green-tint` | Very subtle green surface; sampled from pack thumbnail |
+| Error red | `#E5484D` | `--color-error` | Form errors only; provisional semantic value, not confirmed as a pack token |
 
 ### Color rules
 
-- Use `--color-ink` for text on white and `--color-violet` for primary buttons with white text.
-- Use violet text on white for links; use lavender as a selected surface, not as text color for small copy.
-- Keep gold decorative. Do not use it for small text or critical controls.
-- Disabled controls use the control surface and muted text, with a visible disabled state; do not rely on color alone.
+- Use `--color-ink` for text and primary button labels on `--color-primary`; black text keeps the bright green action readable.
+- Use `--color-green-soft` as a selected surface with an additional border or icon cue. Keep the card illustration’s own palette intact.
+- The sample shows gray disabled controls; make disabled state legible through text and shape as well as color.
+- Disabled controls use gray surfaces and muted text, with a visible disabled state; do not rely on color alone.
 - Error text must name the correction, e.g. “날짜를 다시 확인해 주세요”.
 - Keep contrast at WCAG AA for normal text (4.5:1) and large text (3:1); verify final combinations when implementing.
 
 ## 3. Typography
 
-Use a Korean-capable system sans stack. Prefer the native system font so Korean glyphs render cleanly on both iOS and Android. Keep display typography compact and confident; use comfortable line height for Korean body copy.
+The source thumbnail shows a clean Korean sans-serif with heavier section headings and regular supporting text. The exact family and type ramp are not legible in the raster preview and are not exposed by the compressed canvas file. Use the existing Korean-capable system stack below until the source Figma typography styles can be inspected; do not claim a specific pack font or exact sizes.
 
 ```css
 font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
@@ -50,19 +50,21 @@ font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto San
 
 | Role | Size / line height | Weight | Tracking | Use |
 |---|---:|---:|---:|---|
-| Display | `36px / 1.12` mobile, `48px / 1.08` wide | 600 | `-0.035em` | Start screen title and key result headline |
-| Section title | `24px / 1.25` | 600 | `-0.02em` | Form and result section headings |
-| Card title | `20px / 1.3` | 600 | `-0.01em` | Name and topic on share card |
-| Body | `16px / 1.55` | 400 | `-0.01em` | Form guidance and interpretation |
-| Control | `15px / 1.35` | 500 | `-0.01em` | Buttons, topics, input values |
-| Label | `14px / 1.4` | 500 | `0` | Form labels and metadata |
-| Caption | `12px / 1.45` | 400 | `0` | Privacy note, entertainment notice, helper copy |
+| Display | `36px / 1.12` mobile, `48px / 1.08` wide | 600 | `-0.035em` | Existing TARO fallback; confirm pack style |
+| Section title | `24px / 1.25` | 600 | `-0.02em` | Existing TARO fallback; confirm pack style |
+| Card title | `20px / 1.3` | 600 | `-0.01em` | Existing TARO fallback; confirm pack style |
+| Body | `16px / 1.55` | 400 | `-0.01em` | Existing TARO fallback; confirm pack style |
+| Control | `15px / 1.35` | 500 | `-0.01em` | Existing TARO fallback; confirm pack style |
+| Label | `14px / 1.4` | 500 | `0` | Existing TARO fallback; confirm pack style |
+| Caption | `12px / 1.45` | 400 | `0` | Existing TARO fallback; confirm pack style |
 
 - Do not set Korean body text below `12px`.
 - Keep interpretation text easy to scan; use separate lines rather than a compressed paragraph.
 - Names and card names may wrap; do not truncate user-provided names without notice.
 
 ## 4. Spacing, layout, and shape
+
+**Spacing source status:** the thumbnail suggests compact, consistent spacing and generous separation between screens and major sections, but exact numeric spacing tokens cannot be read from the packed source. Keep the existing 4px-based scale as a TARO implementation fallback until confirmed against editable source styles.
 
 **Base unit:** 4px. Use a small consistent scale and `gap-*` for layout.
 
@@ -114,21 +116,21 @@ Use Tailwind v4 CSS-first theme tokens and shadcn semantic variables. Components
 
 :root {
   color-scheme: light;
-  --background: #f7f6fa;
-  --foreground: #231f2b;
+  --background: #f3f3f5;
+  --foreground: #232427;
   --card: #ffffff;
-  --card-foreground: #231f2b;
-  --primary: #5b45b5;
-  --primary-foreground: #ffffff;
-  --secondary: #f0ecfa;
-  --secondary-foreground: #35266f;
-  --muted: #f0eff3;
-  --muted-foreground: #716b79;
-  --accent: #f0ecfa;
-  --accent-foreground: #35266f;
-  --border: #e5e1eb;
-  --input: #e5e1eb;
-  --ring: #5b45b5;
+  --card-foreground: #232427;
+  --primary: #00d959;
+  --primary-foreground: #232427;
+  --secondary: #e6faef;
+  --secondary-foreground: #232427;
+  --muted: #f3f3f5;
+  --muted-foreground: #68686d;
+  --accent: #e6faef;
+  --accent-foreground: #232427;
+  --border: #d2d2d3;
+  --input: #d2d2d3;
+  --ring: #00d959;
   --radius: 0.75rem;
 }
 ```
@@ -152,7 +154,7 @@ Use Tailwind v4 CSS-first theme tokens and shadcn semantic variables. Components
 | Variant | Appearance | Use |
 |---|---|---|
 | Primary | Violet fill, white text, pill radius, 48px minimum height | 타로 시작, 카드 한 장 뽑기 |
-| Secondary | White fill, violet text, 1px violet/line outline | 이미지 저장, 결과 공유 |
+| Secondary | White fill, ink text, 1px gray outline | 이미지 저장, 결과 공유 |
 | Tertiary | Transparent, ink/muted text, no heavy outline | 다시 뽑기, 보조 동작 |
 | Destructive | Error text and restrained error outline | Only for an explicit destructive confirmation; not used in normal tarot flow |
 
@@ -166,7 +168,7 @@ Use Tailwind v4 CSS-first theme tokens and shadcn semantic variables. Components
 - Order: name (up to 10 characters), birth date, optional major, then topic selection.
 - Use visible labels above fields. Use native date controls where reliable; validate real calendar dates and show the inline error next to the date field.
 - Placeholder examples must not substitute for labels. Use `autocomplete="off"` where suitable and never write values to browser storage.
-- Topic options: six labeled icon choices (커리어, 재물, 연애, 건강, 학업, 종합). Use an obvious selected border and lavender fill; expose selection to assistive technology.
+- Topic options: six labeled icon choices (커리어, 재물, 연애, 건강, 학업, 종합). Use an obvious selected border and pale green fill; expose selection to assistive technology.
 - Keep the privacy alert immediately below the fields, before the main draw action: “입력한 정보는 해석을 만드는 데만 쓰고 저장하지 않아요. 창을 닫거나 [처음으로]를 누르면 바로 지워져요.”
 
 ### Tarot card / result card
@@ -229,7 +231,8 @@ Use the same visual hierarchy as the on-screen reading card. Saved and shared co
 - Do not send personal data to a server, AI service, analytics provider, URL, or browser storage.
 - Do not put birth date or raw major text in saved images or shared messages.
 - Do not imply a certain future or offer medical/financial advice.
-- Do not overuse gold, violet gradients, glow, shadows, or decorative symbols.
+- Do not overuse saturated green, gradients, glow, shadows, or decorative symbols.
 - Do not ship copyrighted card art without clear rights.
 
 ---
+
